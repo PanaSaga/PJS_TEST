@@ -18,7 +18,7 @@ index.html          게임 화면 마크업
 style.css           화면별 스타일 (파란/빨간/초록/실패)
 js/game.js           게임 상태 관리 로직 (대기 → 판정 → 결과/실패)
 js/db.js             saveScore(nickname, ms) / getTop(n) — DB 접근 함수
-js/firebase-config.js  Firebase 프로젝트 설정값 (직접 채워야 함)
+js/firebase-config.template.js  Firebase 설정값 템플릿 (GitHub Secrets로 치환되어 배포됨)
 firestore.rules      Firestore 보안 규칙
 .github/workflows/deploy.yml  GitHub Pages 자동 배포 워크플로우
 ```
@@ -47,13 +47,28 @@ const firebaseConfig = {
 };
 ```
 
-7. 이 값을 `js/firebase-config.js` 파일의 placeholder에 그대로 붙여넣고 커밋/푸시하면 됩니다.
-   (Firebase 웹 API 키는 비밀값이 아니라 프로젝트 식별용이라 공개 저장소에 있어도 안전합니다. 실제 데이터 보호는 Firestore 보안 규칙이 담당합니다.)
+7. 이 값을 아래 표에 맞춰 저장소 **Settings > Secrets and variables > Actions > New repository secret**에 하나씩 등록하세요.
+
+   | Secret 이름 | 값 |
+   |---|---|
+   | `FIREBASE_API_KEY` | apiKey |
+   | `FIREBASE_AUTH_DOMAIN` | authDomain |
+   | `FIREBASE_PROJECT_ID` | projectId |
+   | `FIREBASE_STORAGE_BUCKET` | storageBucket |
+   | `FIREBASE_MESSAGING_SENDER_ID` | messagingSenderId |
+   | `FIREBASE_APP_ID` | appId |
+
+   배포 워크플로우가 실행될 때 이 Secrets 값으로 `js/firebase-config.template.js`를 치환해 `js/firebase-config.js`를 자동 생성합니다. (이 파일은 `.gitignore`에 등록되어 있어 저장소에는 커밋되지 않습니다.)
+
+### 로컬에서 직접 테스트하고 싶다면
+
+`js/firebase-config.template.js`를 복사해 `js/firebase-config.js`를 만들고, `${...}` placeholder를 실제 값으로 바꿔서 사용하세요. 이 파일은 git에 커밋되지 않습니다.
 
 ## GitHub Pages 배포
 
-- `main` 브랜치에 푸시되면 `.github/workflows/deploy.yml` 워크플로우가 자동으로 정적 파일을 GitHub Pages에 배포합니다.
+- `main` 브랜치에 푸시되면 `.github/workflows/deploy.yml` 워크플로우가 Secrets 값으로 `firebase-config.js`를 생성한 뒤, 정적 파일을 GitHub Pages에 배포합니다.
 - 저장소 **Settings > Pages**에서 Source를 "GitHub Actions"로 설정해야 합니다.
+- 위 6개의 Secrets가 등록되어 있어야 배포된 앱이 정상 동작합니다.
 - 배포 후 `https://<username>.github.io/<repo>/` 주소로 접속할 수 있습니다.
 
 ## DB 함수
