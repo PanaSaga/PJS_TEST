@@ -1,0 +1,118 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Malgun Gothic", sans-serif;
+}
+
+.screen {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s ease;
+  cursor: pointer;
+  text-align: center;
+  color: #fff;
+}
+
+.screen--idle {
+  background-color: #1e5fbf;
+}
+
+.screen--waiting {
+  background-color: #1e5fbf;
+}
+
+.screen--ready {
+  background-color: #d92c2c;
+}
+
+.screen--fail {
+  background-color: #444;
+}
+
+.screen--result {
+  background-color: #1f9d55;
+}
+
+.panel {
+  padding: 24px;
+  max-width: 480px;
+}
+
+.big-text {
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 0 0 8px;
+}
+
+.desc {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+button {
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 8px;
+  background: #fff;
+  color: #1e5fbf;
+  font-weight: 700;
+  margin-top: 16px;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+#save-form {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+#nickname-input {
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  width: 160px;
+}
+
+.save-status {
+  margin-top: 8px;
+  font-size: 0.95rem;
+}
+
+.ranking {
+  margin-top: 28px;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  padding: 16px 24px;
+  text-align: left;
+}
+
+.ranking h2 {
+  font-size: 1.1rem;
+  margin: 0 0 8px;
+  text-align: center;
+}
+
+#ranking-list {
+  margin: 0;
+  padding-left: 24px;
+}
+
+#ranking-list li {
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
